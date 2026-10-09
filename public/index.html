@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Train IQ - Smart Digital Solutions for Local Businesses</title>
+  <meta name="description" content="Get a free, personalised digital growth roadmap for your business in under two minutes.">
+  <meta name="theme-color" content="#050508">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+
+  <header class="site-header">
+    <button type="button" class="brand" id="homeBtn" aria-label="Train IQ - back to start">
+      <span class="brand-mark"><span>IQ</span></span>
+      <span>
+        <span class="brand-name">TRAIN <b>IQ</b></span>
+        <span class="brand-tag">Digital Growth Platform</span>
+      </span>
+    </button>
+
+    <div class="progress" id="progress" hidden>
+      <div class="progress-meta"><span>Progress</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="step-wrap" id="steps">
+
+      <!-- 0: Intro -->
+      <section class="step step-center" id="step0">
+        <div class="intro-orb" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <span class="badge">Free digital growth roadmap</span>
+        <h1 class="hero-title">Your business has a <span class="gradient-text">future online.</span></h1>
+        <p class="hero-sub">Answer five quick questions and get a plan built around your goals. It takes about two minutes.</p>
+        <button type="button" class="btn-primary" id="startBtn">
+          <span>Build my roadmap</span>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </section>
+
+      <!-- 1: Category -->
+      <section class="step" id="step1" hidden>
+        <div class="step-head">
+          <span class="eyebrow">Step 1 of 5</span>
+          <h2 class="step-title">What kind of business do you run?</h2>
+          <p class="step-sub">Pick the category that fits best.</p>
+        </div>
+        <div class="choice-grid cols-cat" id="categoryGrid"></div>
+        <div class="panel mt-16" id="customCategoryWrap" hidden>
+          <label class="field-label" for="customCategory">Tell us your business type</label>
+          <input class="input" id="customCategory" type="text" maxlength="80" placeholder="For example: solar panel installation" autocomplete="off">
+        </div>
+      </section>
+
+      <!-- 2: Identity -->
+      <section class="step" id="step2" hidden>
+        <div class="step-head">
+          <span class="eyebrow">Step 2 of 5</span>
+          <h2 class="step-title">Tell us about your business</h2>
+          <p class="step-sub">We use this to personalise your roadmap.</p>
+        </div>
+        <div class="panel form-stack">
+          <label class="field">
+            <span class="field-label">Business name</span>
+            <input class="input" id="bizName" type="text" maxlength="120" placeholder="Apex Auto Care" autocomplete="organization">
+          </label>
+          <label class="field">
+            <span class="field-label">City</span>
+            <input class="input" id="bizLocation" type="text" maxlength="120" placeholder="Bengaluru" autocomplete="address-level2">
+          </label>
+          <label class="field">
+            <span class="field-label">Existing website <small>optional</small></span>
+            <input class="input" id="bizWebsite" type="text" inputmode="url" maxlength="200" placeholder="yourbusiness.com" autocomplete="url">
+            <p class="field-error" id="bizWebsiteError" role="alert"></p>
+          </label>
+        </div>
+      </section>
+
+      <!-- 3: Presence -->
+      <section class="step" id="step3" hidden>
+        <div class="step-head">
+          <span class="eyebrow">Step 3 of 5</span>
+          <h2 class="step-title">Where can customers find you today?</h2>
+          <p class="step-sub">Select every channel you're already on.</p>
+        </div>
+        <div class="choice-grid cols-3 centered-680" id="presenceGrid"></div>
+      </section>
+
+      <!-- 4: Challenges -->
+      <section class="step" id="step4" hidden>
+        <div class="step-head">
+          <span class="eyebrow">Step 4 of 5</span>
+          <h2 class="step-title">What would you most like to improve?</h2>
+          <p class="step-sub">Choose as many as you like.</p>
+        </div>
+        <div class="choice-grid cols-2" id="challengesGrid"></div>
+      </section>
+
+      <!-- 5: Goal & timeline -->
+      <section class="step" id="step5" hidden>
+        <div class="step-head">
+          <span class="eyebrow">Step 5 of 5</span>
+          <h2 class="step-title">What's your main goal, and when?</h2>
+        </div>
+        <div class="stack-lg">
+          <div>
+            <span class="group-label">Main goal</span>
+            <div class="choice-grid cols-3" id="goalsGrid"></div>
+          </div>
+          <div>
+            <span class="group-label">Timeline</span>
+            <div class="choice-grid cols-3" id="timelineGrid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6: Analysing -->
+      <section class="step step-center" id="step6" hidden aria-live="polite">
+        <div class="spinner" aria-hidden="true">
+          <div class="spinner-core">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+        </div>
+        <h3 class="step-title" id="analysisHeader">Building your roadmap...</h3>
+        <p class="step-sub">Matching your goals to the right solutions.</p>
+      </section>
+
+      <!-- 7: Roadmap -->
+      <section class="step" id="step7" hidden>
+        <div class="step-head">
+          <span class="eyebrow">Your roadmap</span>
+          <h2 class="step-title">Recommended growth plan</h2>
+          <p class="roadmap-summary" id="roadmapSummary"></p>
+        </div>
+        <div class="phases" id="phases"></div>
+        <div class="cta-bar">
+          <div>
+            <p>Want this done for you?</p>
+            <p>Our team can handle the whole plan.</p>
+          </div>
+          <button type="button" class="btn-primary btn-sm" id="toLeadBtn">Talk to our team</button>
+        </div>
+      </section>
+
+      <!-- 8: Lead form -->
+      <section class="step" id="step8" hidden>
+        <div class="step-head">
+          <span class="eyebrow">Last step</span>
+          <h2 class="step-title">Where should we reach you?</h2>
+          <p class="step-sub">We'll get back to you with a free consultation.</p>
+        </div>
+        <form class="panel form-stack" id="leadForm" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span class="field-label">Full name *</span>
+              <input class="input" id="leadName" name="fullName" type="text" maxlength="100" required placeholder="Your name" autocomplete="name">
+              <p class="field-error" data-error-for="fullName" role="alert"></p>
+            </label>
+            <label class="field">
+              <span class="field-label">Mobile number (+91) *</span>
+              <input class="input" id="leadPhone" name="mobileNumber" type="tel" inputmode="numeric" maxlength="14" required placeholder="9876543210" autocomplete="tel-national">
+              <p class="field-error" data-error-for="mobileNumber" role="alert"></p>
+            </label>
+          </div>
+          <div class="form-grid">
+            <label class="field">
+              <span class="field-label">Email <small>optional</small></span>
+              <input class="input" id="leadEmail" name="email" type="email" maxlength="150" placeholder="you@example.com" autocomplete="email">
+              <p class="field-error" data-error-for="email" role="alert"></p>
+            </label>
+            <label class="field">
+              <span class="field-label">Best way to contact you</span>
+              <select class="input" id="leadContact" name="preferredContactMethod">
+                <option>WhatsApp</option>
+                <option>Phone Call</option>
+                <option>Email</option>
+              </select>
+            </label>
+          </div>
+          <!-- Spam trap: hidden from people, bots tend to fill it -->
+          <div class="hp" aria-hidden="true">
+            <label>Leave this empty <input type="text" id="hp" name="hp" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <div class="alert alert-error" id="formError" role="alert" hidden></div>
+          <button type="submit" class="btn-primary btn-block" id="submitBtn">Send my enquiry</button>
+          <button type="button" class="link-btn self-center" id="backToRoadmap">Back to my roadmap</button>
+        </form>
+      </section>
+
+      <!-- 9: Success -->
+      <section class="step step-center" id="step9" hidden aria-live="polite">
+        <div class="success-ring" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h2 class="success-title">Enquiry received</h2>
+        <p class="success-text">Thanks! Our growth team will contact you shortly to talk through your plan.</p>
+        <p class="success-ref" id="successRef" hidden>Your reference: <code id="successRefCode"></code></p>
+        <button type="button" class="btn-primary btn-sm" id="restartBtn">Start over</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer-nav" id="footerNav" hidden>
+    <div class="footer-inner">
+      <button type="button" class="btn-ghost" id="backBtn">Back</button>
+      <button type="button" class="btn-primary btn-sm" id="nextBtn">Continue</button>
+    </div>
+  </footer>
+
+  <p class="site-foot">&copy; <span id="year"></span> Train IQ</p>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

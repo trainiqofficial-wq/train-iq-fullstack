@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin - Train IQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Sign in -->
+  <main class="login-wrap" id="loginView" hidden>
+    <form class="panel login-card" id="loginForm" novalidate>
+      <div class="brand-mark"><span>IQ</span></div>
+      <h1 class="login-title">Admin sign in</h1>
+      <p class="step-sub">Train IQ lead dashboard</p>
+
+      <label class="field">
+        <span class="field-label">Username</span>
+        <input class="input" name="username" type="text" autocomplete="username" required>
+      </label>
+      <label class="field">
+        <span class="field-label">Password</span>
+        <input class="input" name="password" type="password" autocomplete="current-password" required>
+      </label>
+
+      <div class="alert alert-error" id="loginError" role="alert" hidden></div>
+      <button class="btn-primary btn-block" type="submit" id="loginBtn">Sign in</button>
+    </form>
+  </main>
+
+  <!-- Dashboard -->
+  <div id="dashView" hidden>
+    <header class="admin-bar">
+      <div class="brand">
+        <span class="brand-mark"><span>IQ</span></span>
+        <span>
+          <span class="brand-name">TRAIN <b>IQ</b></span>
+          <span class="brand-tag">Lead dashboard</span>
+        </span>
+      </div>
+      <div class="admin-actions">
+        <span class="who" id="who"></span>
+        <a class="btn-ghost" id="exportLink" href="/api/admin/leads/export.csv">Export CSV</a>
+        <button class="btn-ghost" type="button" id="logoutBtn">Sign out</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <section class="stats" aria-label="Lead totals">
+        <div class="stat"><span class="stat-num" id="statAll">0</span><span class="stat-label">Total</span></div>
+        <div class="stat"><span class="stat-num" id="statNEW">0</span><span class="stat-label">New</span></div>
+        <div class="stat"><span class="stat-num" id="statCONTACTED">0</span><span class="stat-label">Contacted</span></div>
+        <div class="stat"><span class="stat-num" id="statCLOSED">0</span><span class="stat-label">Closed</span></div>
+      </section>
+
+      <section class="toolbar">
+        <input class="input" id="search" type="search" placeholder="Search name, phone, email, business, city" aria-label="Search leads">
+        <select class="input" id="statusFilter" aria-label="Filter by status">
+          <option value="">All statuses</option>
+          <option>NEW</option>
+          <option>CONTACTED</option>
+          <option>CLOSED</option>
+        </select>
+        <button class="btn-ghost" type="button" id="refreshBtn">Refresh</button>
+      </section>
+
+      <div class="alert alert-error" id="dashError" role="alert" hidden></div>
+
+      <div class="panel table-panel">
+        <div class="table-scroll">
+          <table class="leads">
+            <thead>
+              <tr>
+                <th>Lead</th>
+                <th>Business</th>
+                <th>Category</th>
+                <th>Timeline</th>
+                <th>Status</th>
+                <th>Received</th>
+                <th><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="leadRows"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="emptyState" hidden>No leads match yet. New enquiries from the public page will appear here.</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>
