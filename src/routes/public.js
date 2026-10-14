@@ -3,6 +3,7 @@ const rateLimit = require('express-rate-limit');
 const opt = require('../options');
 const store = require('../db');
 const { validateLead } = require('../validate');
+const { notifyNewLead } = require('../telegram');
 
 const router = express.Router();
 
@@ -36,6 +37,8 @@ router.post('/leads', submitLimiter, async (req, res, next) => {
     if (errors) return res.status(400).json({ error: 'Please check the highlighted fields.', fields: errors });
 
     const lead = await store.insertLead(value);
+    // Telegram is best-effort: a notification failure must never undo a saved lead.
+    await notifyNewLead(lead);
     res.status(201).json({ success: true, leadRef: lead.leadRef });
   } catch (err) {
     next(err);
