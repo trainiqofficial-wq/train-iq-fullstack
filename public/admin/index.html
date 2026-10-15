@@ -59,6 +59,109 @@
         <div class="stat"><span class="stat-num" id="statCLOSED">0</span><span class="stat-label">Closed</span></div>
       </section>
 
+      <!-- Funnel analytics -->
+      <section class="analytics-heading">
+        <div>
+          <h2>Customer funnel analytics</h2>
+          <p>Anonymous visit and progress tracking. Drop-offs are counted after 30 minutes of inactivity.</p>
+        </div>
+        <div class="analytics-tools">
+          <label class="sr-only" for="analyticsPeriod">Analytics period</label>
+          <select class="input" id="analyticsPeriod">
+            <option value="7">Last 7 days</option>
+            <option value="30" selected>Last 30 days</option>
+            <option value="90">Last 90 days</option>
+          </select>
+          <button class="btn-ghost" type="button" id="refreshAnalyticsBtn">Refresh analytics</button>
+        </div>
+      </section>
+
+      <div class="alert alert-error" id="analyticsError" role="alert" hidden></div>
+
+      <section class="analytics-stats" aria-label="Customer funnel metrics">
+        <div class="stat"><span class="stat-num" id="anOpened">0</span><span class="stat-label">Link opened</span></div>
+        <div class="stat"><span class="stat-num" id="anStarted">0</span><span class="stat-label">Flow started</span></div>
+        <div class="stat"><span class="stat-num" id="anInteracted">0</span><span class="stat-label">Started filling</span></div>
+        <div class="stat"><span class="stat-num" id="anAbandoned">0</span><span class="stat-label">Dropped off · inactive 30m+</span></div>
+        <div class="stat"><span class="stat-num" id="anSubmitted">0</span><span class="stat-label">Submitted enquiries</span></div>
+        <div class="stat"><span class="stat-num" id="anConversion">0%</span><span class="stat-label">Started-to-submit rate</span></div>
+        <div class="stat"><span class="stat-num" id="anNoStart">0</span><span class="stat-label">Opened, didn't start</span></div>
+        <div class="stat"><span class="stat-num" id="anActive">0</span><span class="stat-label">Currently in progress</span></div>
+        <div class="stat"><span class="stat-num" id="anSubmitAttempts">0</span><span class="stat-label">Submit attempts</span></div>
+        <div class="stat"><span class="stat-num" id="anSubmitFailures">0</span><span class="stat-label">Failed submissions</span></div>
+      </section>
+
+      <section class="analytics-columns">
+        <div class="panel analytics-card">
+          <div class="analytics-card-head">
+            <h3>Step reach and drop-off</h3>
+            <span id="analyticsPeriodLabel" class="sub"></span>
+          </div>
+          <div class="table-scroll">
+            <table class="analytics-table">
+              <thead>
+                <tr><th>Step</th><th>Reached</th><th>Inactive drop-offs</th></tr>
+              </thead>
+              <tbody id="stepRows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel analytics-card">
+          <div class="analytics-card-head">
+            <h3>Traffic sources</h3>
+            <h3>Devices</h3>
+          </div>
+          <div class="breakdown-grid">
+            <div>
+              <p class="analytics-muted">Campaign source</p>
+              <div id="sourceRows" class="breakdown-list"></div>
+            </div>
+            <div>
+              <p class="analytics-muted">Device type</p>
+              <div id="deviceRows" class="breakdown-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel analytics-card">
+        <div class="analytics-card-head">
+          <h3>Recent visitor sessions</h3>
+          <span class="sub">Anonymous session details</span>
+        </div>
+        <div class="table-scroll">
+          <table class="analytics-table wide">
+            <thead>
+              <tr>
+                <th>First seen</th><th>Status</th><th>Last step</th><th>Device</th>
+                <th>Source / referrer</th><th>Last activity</th><th>Events</th><th>Session</th>
+              </tr>
+            </thead>
+            <tbody id="sessionRows"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="emptySessions" hidden>No sessions recorded for this period yet.</p>
+      </section>
+
+      <section class="panel analytics-card">
+        <div class="analytics-card-head">
+          <h3>Recent tracking events</h3>
+          <span class="sub">Latest 100 events in the selected period</span>
+        </div>
+        <div class="table-scroll">
+          <table class="analytics-table wide">
+            <thead>
+              <tr><th>Time</th><th>Event</th><th>Step</th><th>Field</th><th>Session</th></tr>
+            </thead>
+            <tbody id="eventRows"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="emptyEvents" hidden>No tracking events recorded for this period yet.</p>
+        <p class="analytics-privacy">Privacy: analytics stores anonymous session IDs, step events, field names, campaign/referrer host and device category. It does not store what visitors type into fields.</p>
+      </section>
+
+      <!-- Existing lead management -->
       <section class="toolbar">
         <input class="input" id="search" type="search" placeholder="Search name, phone, email, business, city" aria-label="Search leads">
         <select class="input" id="statusFilter" aria-label="Filter by status">
